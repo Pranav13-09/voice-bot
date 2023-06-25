@@ -17,6 +17,7 @@ Implemented text-to-speech functionality which converts the GPT response into sp
 TechStack used  
 
 Backend : NodeJS,Express,socket.io
+
 Frontend : HTML,CSS,Javascript
 
 
