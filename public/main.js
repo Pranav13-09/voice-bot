@@ -1,5 +1,5 @@
 console.log("main.js loaded here");
-const socket = io("https://voice-bot-olive.vercel.app");
+const socket = io();
 
 let recognition;
 let silenceTimer;
