@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/socket.io/socket.io.js", "destination": "/_next/static/socket.io.js" },
+    { "source": "/socket.io", "destination": "/_next/static/socket.io" }
+  ]
+}
