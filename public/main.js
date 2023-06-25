@@ -37,6 +37,7 @@ startButton.addEventListener("click", () => {
     clearTimeout(silenceTimer);
     silenceTimer = setTimeout(() => {
       recognition.stop();
+      console.log("Before emitting the event");
       socket.emit("user-query", text); //emitting the event "user query which is listened on the backend , sending the  user query in foem of text to the backend server"
       console.log("event is emitted");
       loadingSpinner.style.display = "block"; //Loading the spinner while request is being processed
