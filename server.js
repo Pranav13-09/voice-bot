@@ -12,7 +12,7 @@ require("dotenv").config();
 //Load the API key for OPENAI from .env file
 const openai = new OpenAI(process.env.OPEN_API_KEY);
 
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 
 //Use socket.io to listen for events and emit the events
 io.on("connection", (socket) => {
