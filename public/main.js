@@ -1,3 +1,4 @@
+console.log("main.js loaded here");
 const socket = io();
 
 let recognition;
