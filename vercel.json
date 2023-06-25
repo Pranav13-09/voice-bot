@@ -4,6 +4,6 @@
     "builds": [{"src": "server.js", "use": "@vercel/node"}],
     "routes": [{"src": "/(.*)", "dest": "/server.js"}, {
       "src": "/socket.io/(.*)",
-      "dest": "/server.js"
+      "dest": "https://voice-bot-olive.vercel.app/socket.io/"
     }]
 }
