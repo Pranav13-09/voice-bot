@@ -2,8 +2,13 @@
     "version": 2,
     "name": "project_deployment",
     "builds": [{"src": "server.js", "use": "@vercel/node"}],
-    "routes": [{"src": "/(.*)", "dest": "/server.js"}, {
-      "src": "/socket.io/(.*)",
-      "dest": "https://voice-bot-olive.vercel.app/socket.io/"
-    }]
+ "rewrites": [
+    { "source": "/socket.io/(.*)", "destination": "/socket.io/$1" },
+    { "source": "/(.*)", "destination": "/server.js" }
+  ],
+  "routes": [
+    { "src": "/socket.io/(.*)", "dest": "/socket.io/$1" }
+  ]
 }
+
+
