@@ -1,6 +1,17 @@
 # voice-bot
 
 This project involves  use of the OpenAI API to process the user's queries in  form of audio and send them back audio response to their query.
+I have implemented a voice-based user interface on the web application where users can speak their queries. 
+
+Following is the basic flow of this project
+
+Implemented speech-to-text functionality which converts the voice input from the web application into text. 
+
+The bot automatically recognize the silence after the user stops speaking as a trigger to start processing the voice input. 
+
+Passed the converted text into GPT. 
+
+Implemented text-to-speech functionality which converts the GPT response into speech, and returns this audio response to the user through the web application once the input has been processed. 
 
 
 TechStack used  
