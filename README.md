@@ -1,6 +1,7 @@
 # voice-bot
 
-This project involves 
+This project involves  use of the OpenAI API to process the user's queries in  form of audio and send them back audio response to their query.
+
 
 TechStack used  
 
@@ -22,13 +23,11 @@ convert it into 64based encoded audio output and send it to the frontend  by emi
 Backend is hosted on the vercel.
 
 ## Frontend
-Frontend dispays the data fetched from the backend in the tabular format  
+Frontend conatins the Plain UI to provide the voice oice input mechanism for user queries, the response recived from the backend is also displayed in form of audio player on the frontend 
 
-On the home page, there are 5 options provided for performing 5 different tasks. When a user clicks on any one of the options, an axios request is sent to the backend to fetch the required data. The user is then redirected to a new page where the fetched data is displayed in tabular format.
+You can access the frontend at  http://localhost:3000 Locally
 
-The backend server is deployed and available at https://mobiserver.vercel.app. To fetch data from the server, we make a dynamic API request to the URL https://mobiserver.vercel.app/api/${id}, where the 'id' parameter is dynamic and changes automatically based on the data that we want to fetch.
 
-For frontend  https://mobiserver.vercel.app  is the host server.
 
 
 ## Installation
