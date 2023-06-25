@@ -47,7 +47,7 @@ You can access the frontend at  http://localhost:3000 Locally
 Clone the project
 
 bash
-  git clone https://github.com/Pranav13-09/mobilicispr
+  git clone https://github.com/Pranav13-09/voice-bot
 
 
 Go to the project directory
