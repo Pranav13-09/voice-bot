@@ -52,6 +52,7 @@ stopButton.addEventListener("click", () => {
     recognition.stop();
     recognition = null;
     startButton.disabled = false;
+    loadingSpinner.style.display = "none";
     transcript.textContent =
       "Please click on Start Listening  button to  ask question to the ChatBot";
   }
