@@ -32,7 +32,7 @@ convert it into 64based encoded audio output and send it to the frontend  by emi
 
 
 ## Backend Hosting
-Backend is hosted on the vercel.
+Backend is hosted on the render.
 
 ## Frontend
 Frontend conatins the Plain UI to provide the voice oice input mechanism for user queries, the response recived from the backend is also displayed in form of audio player on the frontend 
