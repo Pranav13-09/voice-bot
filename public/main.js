@@ -58,9 +58,8 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
           //   console.log("event is emitted");
           //   loadingSpinner.style.display = "block"; //Loading the spinner while request is being processed
           // }, 2000); // Adjust the silence duration as needed (in milliseconds)
-
+          const text = result[0].transcript.trim();
           if (result.isFinal) {
-            const text = result[0].transcript.trim();
             const confidence = result[0].confidence;
 
             if (confidence >= confidenceThreshold) {
