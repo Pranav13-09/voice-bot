@@ -50,6 +50,8 @@ io.on("connection", (socket) => {
         })
       );
     } catch (err) {
+      const msg = "There is some error at backend. Please try after some time";
+      socket.emit("ServerError", msg);
       console.log(err, "i am the compelte err");
     }
   });

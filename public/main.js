@@ -8,6 +8,7 @@ const startButton = document.getElementById("startButton");
 const stopButton = document.getElementById("stopButton");
 const transcript = document.getElementById("transcript");
 const conversationContainer = document.getElementById("conversationContainer");
+const confidenceThreshold = 0.7;
 
 transcript.textContent =
   "Please click on Start Listening  button to  ask question to the ChatBot";
@@ -28,27 +29,63 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         recognition.interimResults = true;
         recognition.lang = "en-US";
         recognition.start();
+        console.log("before start");
 
         recognition.onstart = () => {
+          console.log("i am started");
           //To automatically dtermine the stop time and sending the query to the backend
           silenceTimer = setTimeout(() => {
+            transcript.textContent =
+              " I was not able to hear anything.Please try again";
+
             recognition.stop();
-          }, 2000); // Adjust the silence duration as needed (in milliseconds)
+            startButton.disabled = false;
+            console.log("i am stopping");
+          }, 6000); // Adjust the silence duration as needed (in milliseconds)
         };
 
         recognition.onresult = (event) => {
           const result = event.results[event.results.length - 1]; //converting the voice into text
-          const text = result[0].transcript;
-          transcript.innerHTML = text;
 
-          clearTimeout(silenceTimer);
-          silenceTimer = setTimeout(() => {
-            recognition.stop();
-            console.log("Before emitting the event");
-            socket.emit("user-query", text); //emitting the event "user query which is listened on the backend , sending the  user query in foem of text to the backend server"
-            console.log("event is emitted");
-            loadingSpinner.style.display = "block"; //Loading the spinner while request is being processed
-          }, 2000); // Adjust the silence duration as needed (in milliseconds)
+          // const text = result[0].transcript;
+          // transcript.innerHTML = text;
+
+          // clearTimeout(silenceTimer);
+          // silenceTimer = setTimeout(() => {
+          //   recognition.stop();
+          //   console.log("Before emitting the event");
+          //   socket.emit("user-query", text); //emitting the event "user query which is listened on the backend , sending the  user query in foem of text to the backend server"
+          //   console.log("event is emitted");
+          //   loadingSpinner.style.display = "block"; //Loading the spinner while request is being processed
+          // }, 2000); // Adjust the silence duration as needed (in milliseconds)
+
+          if (result.isFinal) {
+            const text = result[0].transcript.trim();
+            const confidence = result[0].confidence;
+
+            if (confidence >= confidenceThreshold) {
+              transcript.innerHTML = text;
+
+              clearTimeout(silenceTimer);
+              silenceTimer = setTimeout(() => {
+                recognition.stop();
+
+                if (text === "") {
+                  // Handle case when no voice input is recognized
+                  transcript.textContent =
+                    "Sorry, I couldn't recognize your voice input. Please try again.";
+                } else {
+                  // Emit the user query event to the server
+                  socket.emit("user-query", text);
+                  loadingSpinner.style.display = "block";
+                }
+              }, 2000); // Adjust the silence duration as needed (in milliseconds)
+            } else {
+              // Handle case when confidence level is below the threshold
+              transcript.textContent =
+                "I'm sorry, but I'm not confident in recognizing your voice input. Please try again.";
+            }
+          }
         };
       });
 
@@ -82,7 +119,6 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         audioElement.src = "data:audio/mpeg;base64," + base64Data;
         audioElement.controls = true;
         audioElement.autoplay = true; // Autoplay
-        console.log(audioElement, "ia m audio Element");
 
         audioContainer.appendChild(transcriptElement);
         audioContainer.appendChild(audioElement);
@@ -98,10 +134,20 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         transcript.textContent =
           "Please click on Start Listening  button to  ask question to the ChatBot";
       });
+
+      socket.on("ServerError", (msg) => {
+        alert(msg);
+        startButton.disabled = false;
+        loadingSpinner.style.display = "none";
+        transcript.textContent =
+          "Please click on Start Listening  button to  ask question to the ChatBot";
+      });
     })
     .catch(function (error) {
       // Microphone permission denied or not supported
       // Display an alert to the user
+      transcript.innerHTML =
+        "Please allow microphone access to proceed.Refresh the page after allowing microphone access";
       alert(
         "Microphone permission is required to use the chatbot. Please grant microphone permission to begin."
       );
@@ -109,6 +155,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 } else {
   // getUserMedia API not supported by the browser
   // Display an alert or fallback message to inform the user
+
   alert(
     "Your browser does not support the required features to use the chatbot. Please use a modern browser with microphone support."
   );
